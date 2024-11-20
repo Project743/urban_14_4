@@ -5,8 +5,11 @@ kb = ReplyKeyboardMarkup(resize_keyboard=True)
 button1 = KeyboardButton(text='Рассчитать')
 button2 = KeyboardButton(text='Информация')
 button3 = KeyboardButton(text='Купить')
+button4 = KeyboardButton(text='Регистрация')
 kb.add(button1, button2)
 kb.add(button3)
+kb.add(button4)
+
 inline_kb = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories'),

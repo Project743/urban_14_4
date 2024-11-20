@@ -11,21 +11,27 @@ def execute_query(query, params=(), fetch=False):
         connection.commit()
 
 
-
-
-
-
 def initiate_db():
     # Создание таблицы, если она не существует
-    create_table_query = f'''
-    CREATE TABLE IF NOT EXISTS Products(
-        id INTEGER PRIMARY KEY,
-        title TEXT NOT NULL,
-        description TEXT,
-        price INTEGER NOT NULL
-    )
-    '''
-    execute_query(create_table_query)
+    create_table_query_1 = f'''
+        CREATE TABLE IF NOT EXISTS Products(
+            id INTEGER PRIMARY KEY,
+            title TEXT NOT NULL,
+            description TEXT,
+            price INTEGER NOT NULL
+        )
+        '''
+    create_table_query_2 = f'''
+        CREATE TABLE IF NOT EXISTS Users(
+            id INTEGER PRIMARY KEY,
+            username TEXT NOT NULL,
+            email TEXT NOT NULL,
+            age INTEGER NOT NULL,
+            balance INTEGER NOT NULL
+        )
+        '''
+    execute_query(create_table_query_1)
+    execute_query(create_table_query_2)
 
 
 # Добавление записей в таблицу
@@ -39,3 +45,18 @@ def get_all_products():
     select_query = "SELECT * FROM Products"
     products = execute_query(select_query, fetch=True)
     return products
+
+
+def add_user(username: str, email: str, age: int, balance: int = 1000):
+    execute_query(
+             "INSERT INTO Users (username, email, age, balance) VALUES (?, ?, ?, ?)",
+             (username, email,age,balance)
+         )
+
+def is_included(username: str):
+    select_query = "SELECT 1 FROM Users WHERE username = ? LIMIT 1"
+    if execute_query(select_query, (username,), fetch=True):
+        return True
+    else:
+        return False
+
