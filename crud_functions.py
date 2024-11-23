@@ -3,7 +3,7 @@ import sqlite3
 
 # Функция для создания подключения и выполнения SQL-запросов
 def execute_query(query, params=(), fetch=False):
-    with sqlite3.connect('telegram.db') as connection:
+    with sqlite3.connect('files/telegram.db') as connection:
         cursor = connection.cursor()
         cursor.execute(query, params)
         if fetch:
@@ -49,9 +49,10 @@ def get_all_products():
 
 def add_user(username: str, email: str, age: int, balance: int = 1000):
     execute_query(
-             "INSERT INTO Users (username, email, age, balance) VALUES (?, ?, ?, ?)",
-             (username, email,age,balance)
-         )
+        "INSERT INTO Users (username, email, age, balance) VALUES (?, ?, ?, ?)",
+        (username, email, age, balance)
+    )
+
 
 def is_included(username: str):
     select_query = "SELECT 1 FROM Users WHERE username = ? LIMIT 1"
@@ -59,4 +60,3 @@ def is_included(username: str):
         return True
     else:
         return False
-
